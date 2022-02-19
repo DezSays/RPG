@@ -34,3 +34,11 @@ The methods `attack` and `print_status` method in `Hero` and `Goblin` look almos
 
 ## Step 9: Bonus Challenge 2
 Create a zombie character that cannot die and have it fight the hero instead of the goblin.
+
+
+
+
+
+
+
+
