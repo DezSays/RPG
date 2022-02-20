@@ -4,8 +4,8 @@ import random
 
 
 
-# Give each enemy a bounty. For example, the prize for defeating the `Goblin` is 5 coins, for the Wizard it is 6 coins. // ideas for this// create a new method within the hero class that tracks coins - see bank example perhaps? setup a total bank for the hero and .append spoils of war to add to heros total bank. setup a spoils of war variable that the hero can recieve upon the enemys death. perhaps the alive function could be altered?
-# maybe add bounty to the original, see marked out below
+
+
 
 class Character:
     def __init__(self,health,power):
@@ -122,7 +122,7 @@ class Hero(Character):
         if r ==3 and (enemy.character_name != "Urrrhhhgggaaarrruu"):
             DoubleTrouble = (self.power + self.power)
             enemy.health-=self.power
-            return f'WOW! {DoubleTrouble} damage was dealt to {enemy.health} this turn!'
+            return f'WOW! {DoubleTrouble} damage was dealt to {enemy.character_name} this turn!'
         else:
             return f'{self.character_name} took {self.power} damage this turn. '   
     
@@ -143,46 +143,14 @@ class Hero(Character):
     def Spoils_of_War(self, enemy):
         self.chest = []
         self.bounty = "0"
-        if enemy.health == 0:
-            treasure = self.chest.append(enemy.bounty)
-            self.chest = treasure
-            # coin_count +=1
+        if enemy.health <= 0:
+            coins = self.chest.append(enemy.bounty)
+            self.chest = coins
             print(f'{self.chest}')
             return f'{self.character_name} has successfully defeated {enemy.character_name} and has collected a bounty of {enemy.bounty} coins! '
         else:
             False 
 
-
-    # def Spoils_of_War(self, enemy):
-    #     self.chest = []
-    #     self.bounty = "0"
-    #     if enemy.health == 0:
-    #         treasure = self.chest.append(enemy.bounty)
-    #         self.chest = treasure
-    #         print(f'{self.chest}')
-    #         return f'{self.character_name} has successfully defeated {enemy.character_name} and has collected a bounty of {enemy.bounty} coins! '
-    #     else:
-    #         False 
-
-
-
-
-# class Button: 
-
-#     # constructor 
-#     def __init__(self, color, name): 
-#         self.color = color # instance variables
-#         self.name = name 
-#         self.click = 0    
-    
-#     # methods
-#     def show_info(self):
-#         print(f'{self.name} {self.color} {self.click}')
-        
-#     def handle_click(self): 
-#         self.click +=1 
-#         print(f'num of clicks {self.click}')
-        
 
 
 
@@ -196,38 +164,43 @@ class Goblin(Character): #Starter character
 
 class Zombie(Character): #health not affected
     def __init__(self, health, power):
+        self.bounty = "10"
         self.character_name = "Urrrhhhgggaaarrruu"
         super(Zombie, self).__init__(health,power)
-        self.bounty = "10"
+
 
 
 
 class Shadow(Character): #only gets hit 10% of the time
     def __init__(self, health, power):
+        self.bounty = "7"
         self.character_name = "La Sombra"
         super(Shadow, self).__init__(health,power)    
-        self.bounty = "7"
+
 
 
 class Warrior(Character):#25% chance of hitting the hero 4x harder if the hero's health is under a set amount.
     def __init__(self, health, power):
+        self.bounty = "12"
         self.character_name = "Kevin the Bulldog"
         super(Warrior, self).__init__(health,power)
-        self.bounty = "12"
+
 
 
 class Mage(Character):#attacks heros power 25% of time instead of hero health. If hero power drops below 0, mage heals.
     def __init__(self, health, power):
+        self.bounty = "17"
         self.character_name = "Doug the Pug"
         super(Mage, self).__init__(health,power) 
-        self.bounty = "17"
+
 
 
 class Medic(Character):
     def __init__(self, health, power):
+        self.bounty = "10"
         self.character_name = "Dr. Newlon"
         super(Medic, self).__init__(health,power)
-        self.bounty = "10"
+
 
     def attack(self, enemy):
         if(enemy.character_name != "Urrrhhhgggaaarrruu"): 
@@ -275,7 +248,7 @@ def main(enemy):
         if raw_input == "1":
             hero.attack(enemy)          
             if not enemy.alive():
-                print(f"{enemy.character_name} is dead.")
+                print(f"{enemy.character_name} has been defeated.")
                 break
         elif raw_input == "2":
             pass
@@ -290,7 +263,7 @@ def main(enemy):
             if not hero.alive():
                 print("You have been defeated.")
 
-main(goblin)
+main(medic)
 
 
 
