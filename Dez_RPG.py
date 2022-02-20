@@ -2,10 +2,10 @@ from audioop import add
 import math
 import random
 
-# Come up with at least two other characters with their individual characteristics, and implement them. warrior and mage - potential powers: deal double damage if health is below 50%, attacks enemy health and power.
 
-# Give each enemy a bounty. For example, the prize for defeating the `Goblin` is 5 coins, for the Wizard it is 6 coins. // ideas for this// create a new method within the hero class that tracks coints - see bank example perhaps?
 
+# Give each enemy a bounty. For example, the prize for defeating the `Goblin` is 5 coins, for the Wizard it is 6 coins. // ideas for this// create a new method within the hero class that tracks coins - see bank example perhaps? setup a total bank for the hero and .append spoils of war to add to heros total bank. setup a spoils of war variable that the hero can recieve upon the enemys death. perhaps the alive function could be altered?
+# maybe add bounty to the original, see marked out below
 
 class Character:
     def __init__(self,health,power):
@@ -31,23 +31,40 @@ class Character:
         elif(self.character_name == "Giant Green Goblin"):
             print(f'The {self.character_name} inflicted {self.power} damage. ')
         
+        elif(self.character_name == "Kevin the Bulldog"):
+            print(f'The {self.character_name} inflicted {self.power} damage. ')
+        
+        elif(self.character_name == "Doug the Pug"):
+            print(f'The {self.character_name} inflicted {self.power} damage. ')        
         
         elif(self.character_name == "Urrrhhhgggaaarrruu"):
             print(f"The {self.character_name} inflicted {self.power} damage on {enemy.character_name}!")
     
     
     
-    def print_status(self):
+    def print_status(self): #These could be shortened using else, but formatting it the long way is easier for me to keep track.
         if(self.character_name == "Hero Velvet Thunder"):
             print(f'{self.character_name} has {self.health} health and {self.power} power.')
+        
         elif(self.character_name == "Dr. Newlon"):
-            print(f'The {self.character_name} has {self.health} health and {self.power} power. ')
+            print(f'{self.character_name} has {self.health} health and {self.power} power. ')
+        
         elif(self.character_name == "La Sombra"):
-            print(f'The {self.character_name} has {self.health} health and {self.power} power. ')
+            print(f'{self.character_name} has {self.health} health and {self.power} power. ')
+        
         elif(self.character_name =="Giant Green Goblin"):
-            print(f'The {self.character_name} has {self.health} health and {self.power} power. ')
+            print(f'{self.character_name} has {self.health} health and {self.power} power. ')
+        
+        elif(self.character_name =="Kevin the Bulldog"):
+            print(f'{self.character_name} has {self.health} health and {self.power} power. ')
+        
+        elif(self.character_name =="Doug the Pug"):
+            print(f'{self.character_name} has {self.health} health and {self.power} power. ')
+        
         elif(self.character_name == "Urrrhhhgggaaarrruu"):
             print(f'{self.character_name} has {self.health} health and {self.power} strength. {self.character_name} is of the Zombie class and cannot be killed. Run! ')
+    
+
 
 
 
@@ -56,17 +73,41 @@ class Character:
 
 
 class Hero(Character):
+    
     def __init__(self, health, power):
         self.character_name = "Hero Velvet Thunder"
         super(Hero, self).__init__(health,power)
+
     
-    def attack(self, enemy): #Hero attack mathod that allows for different abilities (the zombie cannot die)(the shado only takes a hit 10% of the time)
+    def attack(self, enemy): #Hero attack mathod that allows for different abilities (the zombie cannot die)(the shadow only takes a hit 10% of the time)
+
         if(enemy.character_name == "La Sombra"): 
             print(self.Shining_Light(enemy))
+            print(self.Spoils_of_War(enemy))
+            
+        elif(enemy.character_name =="Kevin the Bulldog"):
+            print(self.Bulldog_Bite(enemy))
+            print(self.Spoils_of_War(enemy))
+            
+        elif(enemy.character_name =="Doug the Pug"):
+            print(self.Cuddle_Buddy(enemy))
+            print(self.Spoils_of_War(enemy))
+                
         elif(enemy.character_name != "Urrrhhhgggaaarrruu" ):
             enemy.health-=self.power
-            print(self.getPower(enemy)) 
+            print(self.getPower(enemy))
+            print(self.Spoils_of_War(enemy))
         
+    def Cuddle_Buddy(self, enemy):
+        enemy.health-=self.power
+        d = random.randint(1,4)
+        if d == 1 and (enemy.character_name != "Urrrhhhgggaaarrruu"):
+            power_of_love = self.power-enemy.power
+            self.power = power_of_love
+            return f'{enemy.character_name} is so cute, that he has weakened your power! Your power is now at {self.power}'
+        else:
+            return f'{enemy.character_name} has been hit with {self.power} damage. '
+    
     def Shining_Light(self, enemy): #This allows the shadow to evade being hit 90% of the time, and kills it once it is finally hit.
         s = random.randint(1,10)
         if s == 1 and (enemy.character_name != "Urrrhhhgggaaarrruu"):
@@ -80,40 +121,114 @@ class Hero(Character):
         r = random.randint(1,5)
         if r ==3 and (enemy.character_name != "Urrrhhhgggaaarrruu"):
             DoubleTrouble = (self.power + self.power)
-            enemy.health-self.power
-            return f'WOW! {DoubleTrouble} damage was dealt to {enemy.character_name} this turn!'
+            enemy.health-=self.power
+            return f'WOW! {DoubleTrouble} damage was dealt to {enemy.health} this turn!'
         else:
             return f'{self.character_name} took {self.power} damage this turn. '   
+    
+    def Bulldog_Bite(self, enemy): #this gives my warrior a 25% chance of hitting the hero 4x harder if the hero's health is under a set amount. 
+        b = random.randint(1,4)
+        bite_power = self.health <= 20
+        if b ==1 and bite_power and (enemy.character_name != "Urrrhhhgggaaarrruu"):
+            x = (enemy.power + enemy.power + enemy.power) 
+            Bite = self.health - x
+            self.health=Bite
+            dirty_mouth = enemy.power + x
+            return f'{enemy.character_name} Special Power Activated! {dirty_mouth} damage was dealt to {self.character_name} this turn!'
+        else:
+            dental_insurance = enemy.health - self.power
+            enemy.health = dental_insurance
+            return f'{enemy.character_name} took {self.power} damage this turn. ' 
+
+    def Spoils_of_War(self, enemy):
+        self.chest = []
+        self.bounty = "0"
+        if enemy.health == 0:
+            treasure = self.chest.append(enemy.bounty)
+            self.chest = treasure
+            # coin_count +=1
+            print(f'{self.chest}')
+            return f'{self.character_name} has successfully defeated {enemy.character_name} and has collected a bounty of {enemy.bounty} coins! '
+        else:
+            False 
+
+
+    # def Spoils_of_War(self, enemy):
+    #     self.chest = []
+    #     self.bounty = "0"
+    #     if enemy.health == 0:
+    #         treasure = self.chest.append(enemy.bounty)
+    #         self.chest = treasure
+    #         print(f'{self.chest}')
+    #         return f'{self.character_name} has successfully defeated {enemy.character_name} and has collected a bounty of {enemy.bounty} coins! '
+    #     else:
+    #         False 
 
 
 
 
-class Goblin(Character):
+# class Button: 
+
+#     # constructor 
+#     def __init__(self, color, name): 
+#         self.color = color # instance variables
+#         self.name = name 
+#         self.click = 0    
+    
+#     # methods
+#     def show_info(self):
+#         print(f'{self.name} {self.color} {self.click}')
+        
+#     def handle_click(self): 
+#         self.click +=1 
+#         print(f'num of clicks {self.click}')
+        
+
+
+
+class Goblin(Character): #Starter character
     def __init__(self, health, power):
+        self.bounty = "5"
         self.character_name = "Giant Green Goblin"
         super(Goblin, self).__init__(health,power)
+        
 
 
-
-
-class Zombie(Character):
+class Zombie(Character): #health not affected
     def __init__(self, health, power):
         self.character_name = "Urrrhhhgggaaarrruu"
         super(Zombie, self).__init__(health,power)
+        self.bounty = "10"
 
 
 
-class Shadow(Character):
+class Shadow(Character): #only gets hit 10% of the time
     def __init__(self, health, power):
         self.character_name = "La Sombra"
         super(Shadow, self).__init__(health,power)    
+        self.bounty = "7"
 
+
+class Warrior(Character):#25% chance of hitting the hero 4x harder if the hero's health is under a set amount.
+    def __init__(self, health, power):
+        self.character_name = "Kevin the Bulldog"
+        super(Warrior, self).__init__(health,power)
+        self.bounty = "12"
+
+
+class Mage(Character):#attacks heros power 25% of time instead of hero health. If hero power drops below 0, mage heals.
+    def __init__(self, health, power):
+        self.character_name = "Doug the Pug"
+        super(Mage, self).__init__(health,power) 
+        self.bounty = "17"
 
 
 class Medic(Character):
     def __init__(self, health, power):
         self.character_name = "Dr. Newlon"
         super(Medic, self).__init__(health,power)
+        self.bounty = "10"
+
     def attack(self, enemy):
         if(enemy.character_name != "Urrrhhhgggaaarrruu"): 
             enemy.health-=self.power
@@ -127,18 +242,19 @@ class Medic(Character):
         else:
             return f'{enemy.character_name} took {self.power} damage this turn. '
         
-        
-        
 
 
 
 
 
-hero = Hero(10,5)
+
+hero = Hero(25,3)
 goblin = Goblin(6,2)
 zombie = Zombie(50,1)
 medic = Medic(30, 1)
 shadow = Shadow(1,1)
+warrior = Warrior(25,3)
+mage = Mage(30, 3)
 
 
 
@@ -159,7 +275,7 @@ def main(enemy):
         if raw_input == "1":
             hero.attack(enemy)          
             if not enemy.alive():
-                print(f"The {enemy.character_name} is dead.")
+                print(f"{enemy.character_name} is dead.")
                 break
         elif raw_input == "2":
             pass
@@ -174,7 +290,7 @@ def main(enemy):
             if not hero.alive():
                 print("You have been defeated.")
 
-main(shadow)
+main(goblin)
 
 
 
