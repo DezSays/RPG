@@ -2,7 +2,11 @@ from audioop import add
 import math
 import random
 
-
+# ## Items - still needs work.
+# 1. Make a `SuperTonic` item to the store, it will restore the hero back to 10 health points. # Dez comments# make a class called items. need method called supertonic.  
+# 2. Add an `Armor` item to the store. Buying an armor will add 2 armor points to the hero - you will add "armor" as a new attribute to hero. Every time the hero is attacked, the amount of hit points dealt to him will be reduced by the value of the armor attribute.
+# 3. Add an `Evade` item to the store. Buying an "evade" will add 2 evade points to the hero - another new attribute on the Hero object. The more evade he has, the more probable that he will evade an enemy attack unscathed. For example: 2 evade points: 10% probably of avoiding attack, 4 evade points: 15% probability of avoiding attack. It should never be possible to reach 100% evasion though.
+# 4. Come up with at least two other items with their unique characteristics and implement them. You can add more attributes to the hero or the characters.
 
 
 
@@ -221,12 +225,12 @@ class Medic(Character):
 
 
 
-hero = Hero(25,3)
+hero = Hero(25,4)
 goblin = Goblin(6,2)
 zombie = Zombie(50,1)
-medic = Medic(30, 1)
+medic = Medic(30, 2)
 shadow = Shadow(1,1)
-warrior = Warrior(25,3)
+warrior = Warrior(25,4)
 mage = Mage(30, 3)
 
 
@@ -263,7 +267,7 @@ def main(enemy):
             if not hero.alive():
                 print("You have been defeated.")
 
-main(medic)
+main(mage)
 
 
 
